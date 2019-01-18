@@ -77,11 +77,7 @@ The next key is the `address_method`. If using `"usb0"`, your choices are
 address](https://en.wikipedia.org/wiki/Link-local_address) and the latter
 configures a static IP address and starts a DHCP server that gives an address to
 your computer. We're having better luck with DHCP than link-local support on
-laptops. If you're using a wired or wireless Ethernet interface, you can use
-`:linklocal` or `:dhcpd` if you'd like or you can use `:dhcp` to have your
-device get it's own IP address. The configuration is done via `nerves_network`
-so when you start getting too fancy, you may need to consult the documentation
-there.
+laptops. If using `"eth0"` or `"wlan0"`, using `:dhcp` seems to be the more used option. This will have your device get it's own IP address. You can still use `:linklocal` or `:dhcpd` if you'd like. The configuration is done via `nerves_network` so when you start getting too fancy, you may need to consult the documentation there.
 
 See the [configuration](#configuration) section below for the other parameters.
 
@@ -229,9 +225,17 @@ If you have a password-protected `ssh` private key, `mix firmware.push`
 currently isn't able to prompt for the password or use the `ssh-agent`. This
 means that you either need to pass your password in cleartext on the commandline
 (ugh), create a new public/private key pair, or use commandline `ssh`. For
-commandline `ssh`, take a look at the `upload.sh` script from
-[nerves_firmware_ssh](https://github.com/fhunleth/nerves_firmware_ssh) for an
-example.
+commandline `ssh` do:
+
+```
+mix firmware.gen.script
+```
+Then run:
+```
+./upload.sh
+```
+Take a look at the `upload.sh` script from
+[nerves_firmware_ssh](https://github.com/fhunleth/nerves_firmware_ssh) for more information on this method.
 
 If you have your private key stored in a file with a different name than
 `id_dsa`, `id_rsa`, or `identity`, chances are that `mix firmware push` will not
@@ -271,7 +275,7 @@ specify the following:
 
 * `:linklocal` - assign a link-local IP address
 * `:dhcp` - send a DHCP discovery request on the network to get assigned an IP
-  address
+  address. This would be for when your host and target are on same network, but not connected directly to eachother. Usually set when `:ifname` is `eth0` or `wlan0`
 * `:dhcpd` - set an automatically calculated IP address and start a DHCP server
   to assign an address to the other side of the link. Names are added to
   Erlang's DNS so that you can refer to the computer on the other side of the link
