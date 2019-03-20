@@ -215,31 +215,15 @@ device works and see the troubleshooting section.
 To update firmware from now on, just run the following:
 
 ```sh
-MIX_TARGET=rpi0 mix firmware.push nerves.local
+MIX_TARGET=rpi0
+mix firmware.gen.script
+./upload.sh
 ```
-
 Change `MIX_TARGET` to whatever you're using to build the firmware.  Assuming
 everything completes successfully, the device will reboot with the new firmware.
 
-If you have a password-protected `ssh` private key, `mix firmware.push`
-currently isn't able to prompt for the password or use the `ssh-agent`. This
-means that you either need to pass your password in cleartext on the commandline
-(ugh), create a new public/private key pair, or use commandline `ssh`. For
-commandline `ssh` do:
+*Note: The [firmware.push](https://github.com/nerves-project/nerves_firmware_ssh/blob/master/lib/mix/tasks/firmware.push.ex) function is currently unavailable.*
 
-```
-mix firmware.gen.script
-```
-Then run:
-```
-./upload.sh
-```
-Take a look at the `upload.sh` script from
-[nerves_firmware_ssh](https://github.com/fhunleth/nerves_firmware_ssh) for more information on this method.
-
-If you have your private key stored in a file with a different name than
-`id_dsa`, `id_rsa`, or `identity`, chances are that `mix firmware push` will not
-find them.  Use `upload.sh` in this case as well.
 
 ## Configuration
 
