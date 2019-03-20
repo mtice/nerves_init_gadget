@@ -81,7 +81,7 @@ laptops. If you're using a wired or wireless Ethernet interface, you can use
 `:linklocal` or `:dhcpd` if you'd like or you can use `:dhcp` to have your
 device get it's own IP address. The configuration is done via `nerves_network`
 so when you start getting too fancy, you may need to consult the documentation
-there.
+there. If using `:eth0` and seeing timeout issues with `:dhcpd`, use `:dhcp`. 
 
 See the [configuration](#configuration) section below for the other parameters.
 
